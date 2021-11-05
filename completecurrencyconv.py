@@ -8,6 +8,7 @@ import json
 root = Tk()
 root.title("Currency Converter")
 root.geometry("680x630")
+root.iconbitmap(r"exchange.ico")
 root.option_add( "*font", "RobotoMono 14" )
 
 
@@ -39,14 +40,16 @@ def convertit():
   #getting the values of entries
    value1 =drop1_entry.get()
    value2 =drop2_entry.get()
-   third_entry.delete(0,END)
+  
    if (value1 == "" and value2 == ""):
       ShowError1()
+      third_entry.delete(0,END)
    elif(value1 == ""):
       to_currency = choice1
       from_currency = choice2
       amount = float(value2)
       conversion_rate = round((dataRates[to_currency]/dataRates[from_currency]),4)
+      third_entry.delete(0,END)
       third_entry.insert(0,str(conversion_rate))
       converted_amount = round(float(amount * conversion_rate),1)
       drop1_entry.insert(0,converted_amount)
@@ -54,13 +57,26 @@ def convertit():
       to_currency = choice2
       from_currency = choice1
       amount = float(value1)
-      conversion_rate = round((dataRates[to_currency]/dataRates[from_currency]),4)
+      conversion_rate = round((dataRates[to_currency]/dataRates[from_currency]),2)
+      third_entry.delete(0,END)
       third_entry.insert(0,str(conversion_rate))
       converted_amount = round(float(amount * conversion_rate),1)
       drop2_entry.insert(0,converted_amount)
    else:
-      drop1_entry.delete(0,END)
-      drop2_entry.delete(0,END)
+      from_currency = choice1
+      to_currency = choice2
+      amount = float(value1)
+      conversion_rate = round((dataRates[to_currency]/dataRates[from_currency]),2)
+      converted_amount = round(float(amount * conversion_rate),1)
+      preconversion_rate = third_entry.get()
+      if(float(value2) == converted_amount and float(preconversion_rate) == conversion_rate):
+         return
+      else:
+         drop1_entry.delete(0,END)
+         drop2_entry.delete(0,END)
+
+
+     
       
 #Create Tabs
 my_notebook = ttk.Notebook(root)
@@ -167,7 +183,7 @@ label1.grid(row = 3,column=0,pady=14)
 third_entry = Entry(first_frame,font=("Segoe UI",15),fg="blue")
 third_entry.grid(row=3,column=1,padx=30)
 
-btn1 = Button(frame1,text="convert",command=convertit)
+btn1 = Button(frame1,text="convert",command=convertit,bg='#2a9d8f',fg='#ffffff',width=12,font=("RobotoMono 17"))
 btn1.pack(pady=40)
 
 SetPreValues()
