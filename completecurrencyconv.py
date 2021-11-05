@@ -7,7 +7,7 @@ import json
 
 root = Tk()
 root.title("Currency Converter")
-root.geometry("680x630")
+root.geometry("700x480")
 root.iconbitmap(r"exchange.ico")
 root.option_add( "*font", "RobotoMono 14" )
 
@@ -27,6 +27,11 @@ def SetPreValues():
 
 def ShowError1():
    messagebox.showerror("Input Error","Please give one input !")
+
+def Clear_all():
+   drop1_entry.delete(0,END)
+   drop2_entry.delete(0,END)
+   third_entry.delete(0,END)
 
 #Retriving data function
 def convertit():
@@ -83,8 +88,8 @@ my_notebook = ttk.Notebook(root)
 my_notebook.pack(pady=20)
 
 #Creating two frames
-frame1 = Frame(my_notebook,width=650,height=580)
-frame2 = Frame(my_notebook,width=650,height=580)
+frame1 = Frame(my_notebook,width=650,height=440)
+frame2 = Frame(my_notebook,width=650,height=440)
 
 frame1.pack(fill='both',expand = 1)
 frame2.pack(fill='both',expand = 1)
@@ -183,13 +188,12 @@ label1.grid(row = 3,column=0,pady=14)
 third_entry = Entry(first_frame,font=("Segoe UI",15),fg="blue")
 third_entry.grid(row=3,column=1,padx=30)
 
-btn1 = Button(frame1,text="convert",command=convertit,bg='#2a9d8f',fg='#ffffff',width=12,font=("RobotoMono 17"))
-btn1.pack(pady=40)
+convert_btn = Button(first_frame,text="CONVERT",command=convertit,bg='#2a9d8f',fg='#ffffff',width=12,font=("RobotoMono 15"))
+convert_btn.grid(row=4,column=1,pady = 30)
+
+Clearall_btn = Button(first_frame,text="CLEAR ALL",command=Clear_all,bg='#d62828',fg='#ffffff',width=12,font=("RobotoMono 15"))
+Clearall_btn.grid(row=4,column=0,pady = 30)
 
 SetPreValues()
-
-
-
-
 
 root.mainloop()
