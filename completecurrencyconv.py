@@ -28,6 +28,9 @@ def SetPreValues():
 def ShowError1():
    messagebox.showerror("Input Error","Please give one input !")
 
+def ShowError2():
+   messagebox.showerror("Input Error","Please give valid input !")
+
 def Clear_all():
    drop1_entry.delete(0,END)
    drop2_entry.delete(0,END)
@@ -50,6 +53,7 @@ def convertit():
       ShowError1()
       third_entry.delete(0,END)
    elif(value1 == ""):
+      
       to_currency = choice1
       from_currency = choice2
       amount = float(value2)
@@ -59,6 +63,7 @@ def convertit():
       converted_amount = round(float(amount * conversion_rate),1)
       drop1_entry.insert(0,converted_amount)
    elif(value2 == ""):
+    
       to_currency = choice2
       from_currency = choice1
       amount = float(value1)
@@ -182,7 +187,7 @@ clear_btn3=Button(first_frame,image=clearbtn_img ,borderwidth=0 , command = clea
 clear_btn3.grid(row=3,column=2,padx=5,pady=10)
 
 
-label1 = Label(first_frame ,text = "conversion rate",font=('CascadiaCode 16'),borderwidth=3, relief="sunken",width=18)
+label1 = Label(first_frame ,text = "CONVERSION RATE",font=('CascadiaCode 16'),borderwidth=3, relief="sunken",width=21)
 label1.grid(row = 3,column=0,pady=14)
 
 third_entry = Entry(first_frame,font=("Segoe UI",15),fg="blue")
