@@ -23,7 +23,8 @@ global conversion_rate
 conversion_rate = 0
 global count
 count = 0
-
+global count1
+count1 = 0
 
 #mysql workings are here
 def SaveInDatabase(choice1,choice2,amount,converted_amount,conversion_rate):
@@ -50,16 +51,25 @@ def Clear_all():
    drop2_entry.delete(0,END)
    third_entry.delete(0,END)
 
-def ShowData():
+def ShowData(listbox):
     mydb = mysql.connector.connect(host="localhost",user="root",passwd="@99388849Gv",database = 'mysql')
     cursor = mydb.cursor()
     cursor.execute('select * from conversion')
     records = cursor.fetchall()
+    global count1
+    num = records[count1][0]
+    from_currency = records[count1][1]
+    to_currency = records[count1][2]
+    amount = records[count1][3]
+    converted_amount = records[count1][4]
+    conversion_rate = records[count1][5]
+
+    listbox.insert('','end',values=(num,from_currency,to_currency,amount,converted_amount,conversion_rate))
+    count1 += 1
+    mydb.close()
   
 
-    for i,(num,from_currency,to_currency,amount,converted_amount,conversion_rate) in enumerate(records, start=1):
-        listbox.insert("","end",values=(num,from_currency,to_currency,amount,converted_amount,conversion_rate))
-        mydb.close()
+    
 
 def ClearTable():
    mydb = mysql.connector.connect(host="localhost",user="root",passwd="@99388849Gv",database = 'mysql')
@@ -95,7 +105,7 @@ def convertit():
       converted_amount = round(float(amount * conversion_rate),1)
       drop1_entry.insert(0,converted_amount)
       SaveInDatabase(choice2,choice1,amount,converted_amount,conversion_rate)
-      ShowData()
+      ShowData(listbox)
    elif(value2 == ""):
     
       to_currency = choice2
@@ -107,7 +117,7 @@ def convertit():
       converted_amount = round(float(amount * conversion_rate),1)
       drop2_entry.insert(0,converted_amount)
       SaveInDatabase(choice1,choice2,amount,converted_amount,conversion_rate)
-      ShowData()
+      ShowData(listbox)
    else:
       from_currency = choice1
       to_currency = choice2
