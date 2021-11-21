@@ -13,12 +13,27 @@ root.geometry("730x550")
 root.iconbitmap(r"exchange.ico")
 root.option_add( "*font", "CascadiaMono 14" )
 
-
+def ShowConnectionWarning():
+   messagebox.showwarning("WARNING","Not able to connect to the internet!")
 #API connection Here
-url = 'https://api.exchangerate-api.com/v4/latest/USD'
-data = requests.get(url).text
-dataJSON = json.loads(data)
-dataRates = dataJSON["rates"]
+try:
+    url = 'https://api.exchangerate-api.com/v4/latest/USD'
+    data = requests.get(url).text
+    print("Api connection successfull")
+    dataJSON = json.loads(data)
+    dataRates = dataJSON["rates"]
+    f = open('currency.json','w')
+    f.write(data)
+    f.close()
+
+except:
+   print('Api connection failed')
+   ShowConnectionWarning()
+   openfile = open('currency.json')
+   datajson = json.load(openfile)
+   dataRates = datajson["rates"]
+
+
 global conversion_rate
 conversion_rate = 0
 global count
@@ -168,6 +183,7 @@ def clear_thirdentry():
 options = [
 
    "BRL Brazilian Real",
+   "BYN Belarus Ruble",
    "KHR Cambodian Riel",
    "CAD Canadian Dollar",
    "CNY Chinese Yuan",
@@ -191,10 +207,10 @@ options = [
 
 #setting default value for option menus
 drop1_clicked1 = StringVar()
-drop1_clicked1.set(options[17])
+drop1_clicked1.set(options[18])
 
 drop2_clicked2 = StringVar()
-drop2_clicked2.set(options[6])
+drop2_clicked2.set(options[7])
 
 #setting the width of option menu to the max width of options
 menu_width = len(max(options, key=len))
