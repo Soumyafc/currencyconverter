@@ -109,6 +109,11 @@ def convertit():
    if (value1 == "" and value2 == ""):
       ShowError1()
       third_entry.delete(0,END)
+
+   elif (value1.isnumeric() == False and value2.isnumeric() == False):
+      ShowError2()
+      Clear_all()
+
    elif(value1 == ""):
       
       to_currency = choice1
@@ -121,6 +126,7 @@ def convertit():
       drop1_entry.insert(0,converted_amount)
       SaveInDatabase(choice2,choice1,amount,converted_amount,conversion_rate)
       ShowData(listbox)
+
    elif(value2 == ""):
     
       to_currency = choice2
@@ -133,6 +139,7 @@ def convertit():
       drop2_entry.insert(0,converted_amount)
       SaveInDatabase(choice1,choice2,amount,converted_amount,conversion_rate)
       ShowData(listbox)
+      
    else:
       from_currency = choice1
       to_currency = choice2
