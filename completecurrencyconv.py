@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
+
 from PIL import ImageTk, Image
 import requests
 import json
@@ -19,7 +20,7 @@ def ShowConnectionWarning():
 try:
     url = 'https://api.exchangerate-api.com/v4/latest/USD'
     data = requests.get(url).text
-    print("Api connection successfull")
+    print("Api connection successful")
     dataJSON = json.loads(data)
     dataRates = dataJSON["rates"]
     f = open('currency.json','w')
@@ -186,9 +187,11 @@ def clear_entry2():
 def clear_thirdentry():
    third_entry.delete(0, END)
 
-#Options for option menu
+#Currency options for option menu
 options = [
-
+   
+   "ARS Argentina Peso",
+   "AUD Australlian Dollar",
    "BRL Brazilian Real",
    "BYN Belarus Ruble",
    "KHR Cambodian Riel",
@@ -214,10 +217,10 @@ options = [
 
 #setting default value for option menus
 drop1_clicked1 = StringVar()
-drop1_clicked1.set(options[18])
+drop1_clicked1.set(options[20])
 
 drop2_clicked2 = StringVar()
-drop2_clicked2.set(options[7])
+drop2_clicked2.set(options[9])
 
 #setting the width of option menu to the max width of options
 menu_width = len(max(options, key=len))
@@ -263,9 +266,11 @@ label1.grid(row = 3,column=0,pady=14)
 third_entry = Entry(first_frame,font=("Segoe UI",15),fg="blue")
 third_entry.grid(row=3,column=1,padx=30)
 
+#Convert Button here
 convert_btn = Button(first_frame,text="CONVERT",command=convertit,bg='#2a9d8f',fg='#ffffff',width=12,font=("CascadiaMono 15"))
 convert_btn.grid(row=4,column=1,pady = 30)
 
+#clear all button here
 Clearall_btn = Button(first_frame,text="CLEAR ALL",command=Clear_all,bg='#d62828',fg='#ffffff',width=12,font=("CascadiaMono 15"))
 Clearall_btn.grid(row=4,column=0,pady = 30)
 
@@ -285,20 +290,19 @@ img2 = ImageTk.PhotoImage(Image.open(path))
 panel = Label(image = img2)
 panel.pack(side="bottom",fill="both", expand = True)
 
-
-
-
+#setting height of the treeview
+s = ttk.Style()
+s.configure('Treeview', rowheight=28)
 
 # using treeview to show tabular data
 cols = ('num','From Currency','To Currency','Amount','Converted Amount','Conversion Rate') 
 listbox = ttk.Treeview(frame2,columns=cols,show='headings')
 
+
 for col in cols:
     listbox.heading(col,text=col)
     listbox.grid(row=1,column=0,columnspan=2)
     listbox.pack(pady = 40)
-
-
 
 #Setting width of every column in tree view
 listbox.column("num", width = 50, anchor ='center')
@@ -309,7 +313,7 @@ listbox.column("Converted Amount", width = 125, anchor ='center')
 listbox.column("Conversion Rate", width = 125, anchor ='center')
 
 
-ClearTable()
-SetPreValues()
+ClearTable()  # clearing all data in conversion table
+SetPreValues() # setting pre values for application
 
 root.mainloop()
