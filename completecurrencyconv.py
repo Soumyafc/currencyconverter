@@ -151,8 +151,7 @@ def convertit():
       if(float(value2) == converted_amount and float(preconversion_rate) == conversion_rate):
          return
       else:
-         drop1_entry.delete(0,END)
-         drop2_entry.delete(0,END)
+         Clear_all()
 
 #Heading
 head_label = Label(root,text='CURRENCY CONVERTER',width=40,fg='white',bg='black',font=("Roboto Mono",22))
