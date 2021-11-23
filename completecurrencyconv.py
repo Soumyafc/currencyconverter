@@ -1,7 +1,6 @@
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
-from PIL import ImageTk, Image
 import requests
 import json
 import mysql.connector
@@ -9,7 +8,7 @@ import mysql.connector
 
 root = Tk()
 root.title("Currency Converter")
-root.geometry("730x550")
+root.geometry("730x520")
 root.iconbitmap(r"exchange.ico")
 root.option_add( "*font", "CascadiaMono 14" )
 
@@ -45,7 +44,7 @@ count1 = 0
 def SaveInDatabase(choice1,choice2,amount,converted_amount,conversion_rate):
     global count
     count+=1
-    mydb = mysql.connector.connect(host="localhost",user="root",passwd="@99388849Gv",database = 'mysql')
+    mydb = mysql.connector.connect(host="localhost",user="root",passwd="@99388849Gv",database = 'soumya')
     cursor = mydb.cursor()
     cursor.execute('insert into conversion(num,from_currency,to_currency,amount,converted_amount,conversion_rate) values(%s,%s,%s,%s,%s,%s)',(count,choice1,choice2,amount,converted_amount,conversion_rate))
     mydb.commit()
@@ -67,7 +66,7 @@ def Clear_all():
    third_entry.delete(0,END)
 
 def ShowData(listbox):
-    mydb = mysql.connector.connect(host="localhost",user="root",passwd="@99388849Gv",database = 'mysql')
+    mydb = mysql.connector.connect(host="localhost",user="root",passwd="@99388849Gv",database = 'soumya')
     cursor = mydb.cursor()
     cursor.execute('select * from conversion')
     records = cursor.fetchall()
@@ -87,7 +86,7 @@ def ShowData(listbox):
     
 
 def ClearTable():
-   mydb = mysql.connector.connect(host="localhost",user="root",passwd="@99388849Gv",database = 'mysql')
+   mydb = mysql.connector.connect(host="localhost",user="root",passwd="@99388849Gv",database = 'soumya')
    cursor = mydb.cursor()
    cursor.execute('delete from conversion')
    mydb.commit()
@@ -277,16 +276,7 @@ logo_img = PhotoImage(file='exchange.png')
 logo_label = Label(image=logo_img)
 logo_label.place(x=650,y=70)
 
-#background image adding
-path = "coins2.jpg"
-img = ImageTk.PhotoImage(Image.open(path))
-panel = Label(image = img)
-panel.pack(side="right",fill="both", expand = True)
 
-path = "money.jpg"
-img2 = ImageTk.PhotoImage(Image.open(path))
-panel = Label(image = img2)
-panel.pack(side="bottom",fill="both", expand = True)
 
 #setting height of the treeview
 s = ttk.Style()
